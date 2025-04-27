@@ -165,7 +165,7 @@ pipeline {
 
 
 
-    post {
+    // post {
     //  always {
     //     emailext attachLog: true,
     //         subject: "'${currentBuild.result}'",
@@ -175,6 +175,6 @@ pipeline {
     //         to: 'hlaingminpaing.ygn@gmail.com',                              
     //         attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
     //     }
-    }
+    // }
 
 }
