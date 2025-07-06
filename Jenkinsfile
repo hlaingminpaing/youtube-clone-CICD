@@ -145,7 +145,7 @@ pipeline {
                             dir('Kubernetes') {
                                 withKubeConfig(
                                     credentialsId: "${KUBERNETES_CREDENTIALS_ID}",
-                                    serverUrl: '', // Optional if kubeconfig is valid
+                                    serverUrl: 'https://ADD91CC0494EB641C608631739415B3B.gr7.ap-southeast-1.eks.amazonaws.com', // Optional if kubeconfig is valid
                                     namespace: "${K8S_NAMESPACE}"
                                 ) {
                                     // Optional: print version to verify AWS credentials are working
