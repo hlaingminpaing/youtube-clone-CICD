@@ -51,7 +51,7 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Wait for SonarQube Quality Gate
-      uses: SonarSource/sonarcloud-quality-gate-action@v1.1.0
+      uses: SonarSource/sonarcloud-quality-gate-action@master
       with:
         timeout: 300
       env:
@@ -94,26 +94,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'latest'
-
-    - name: Configure Kubeconfig
-      run: |
-        echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > $HOME/.kube/config
-
-    - name: Replace Image Tag in YAML
+    - name: Update image tag in deployment.yml
       run: |
         sed -i "s|image: .*|image: $DOCKER_IMAGE:${{ env.IMAGE_TAG }}|" Kubernetes/deployment.yml
 
-    - name: Apply Kubernetes Manifests
+    - name: Commit and push updated deployment
       run: |
-        kubectl apply -f Kubernetes/deployment.yml
-        kubectl apply -f Kubernetes/service.yml
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add Kubernetes/deployment.yml
+        git commit -m "Update image to $DOCKER_IMAGE:${{ env.IMAGE_TAG }} [skip ci]" || echo "No changes to commit"
+        git push origin main
 
     - name: Send Email Notification
       uses: dawidd6/action-send-mail@v3
