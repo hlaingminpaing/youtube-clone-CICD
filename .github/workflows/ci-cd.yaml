@@ -51,8 +51,10 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Wait for SonarQube Quality Gate
-      uses: SonarSource/sonarcloud-quality-gate-action@master
+      uses: ecloud/sonar-quality-gate-action@v1
       with:
+        sonar-token: ${{ secrets.SONAR_TOKEN }}
+        project-key: ${{ env.SONAR_PROJECT_KEY }}
         timeout: 300
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
