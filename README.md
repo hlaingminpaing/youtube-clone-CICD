@@ -59,3 +59,41 @@ aws eks update-kubeconfig --name youtube-cluster --region ap-southeast-1
 kubectl get nodes
 kubectl get svc
 ```
+
+# 🚀 CI/CD Pipeline with GitHub Actions
+
+This repository uses **GitHub Actions** to implement a full CI/CD pipeline, including:
+
+- ✅ Code checkout
+- 📦 Dependency installation
+- 🔎 SonarQube static code analysis
+- 🔐 Trivy vulnerability scanning (filesystem & image)
+- 🐳 Docker build & push to Docker Hub
+- ☸️ Kubernetes deployment to EKS
+- 📧 Email notifications on pipeline result (optional)
+
+---
+
+## 🔧 Prerequisites
+
+### 1. 🔐 Set GitHub Secrets
+
+Go to your repository → **Settings → Secrets → Actions**, and add the following secrets:
+
+| Secret Name              | Description                                                  |
+|--------------------------|--------------------------------------------------------------|
+| `DOCKERHUB_USERNAME`     | Your Docker Hub username                                     |
+| `DOCKERHUB_TOKEN`        | Your Docker Hub [access token](https://hub.docker.com/settings/security) |
+| `SONAR_TOKEN`            | Your SonarQube user or project token                         |
+| `SONAR_HOST_URL`         | URL to your SonarQube server (e.g., `https://sonarqube.my.com`) |
+| `AWS_ACCESS_KEY_ID`      | AWS IAM Access Key (with EKS & ECR permissions)              |
+| `AWS_SECRET_ACCESS_KEY`  | AWS IAM Secret Access Key                                    |
+| `KUBECONFIG_BASE64`      | Base64 encoded kubeconfig for EKS cluster                    |
+| `EMAIL_USER`             | Sender email address for notifications (optional)            |
+| `EMAIL_PASS`             | Email SMTP password or app password (Gmail, etc.) (optional) |
+
+### 🔑 How to Get `KUBECONFIG_BASE64`
+
+```bash
+cat ~/.kube/config | base64
+```
