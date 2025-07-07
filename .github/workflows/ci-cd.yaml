@@ -15,6 +15,9 @@ env:
   TRIVY_IMAGE_REPORT: trivyimage.txt
   TRIVY_FS_REPORT: trivyfs.txt
 
+permissions:
+  contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
