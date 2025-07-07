@@ -120,7 +120,7 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add Kubernetes/deployment.yml
         git commit -m "Update image to $DOCKER_IMAGE:${{ env.IMAGE_TAG }} [skip ci]" || echo "No changes to commit"
-        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git HEAD:main
+        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/hlaingminpaing/youtube-clone-CICD.git HEAD:main
 
     - name: Send Email Notification
       uses: dawidd6/action-send-mail@v3
