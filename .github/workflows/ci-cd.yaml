@@ -45,30 +45,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: http://13.250.32.137:9000
 
-    # - name: Wait for SonarQube Quality Gate
-    #   env:
-    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-    #     SONAR_PROJECT_KEY: ${{ env.SONAR_PROJECT_KEY }}
-    #   run: |
-    #     echo "Checking SonarQube Quality Gate status..."
-    #     status="PENDING"
-    #     timeout=300
-    #     interval=10
-    #     elapsed=0
-    #     while [[ "$status" == "PENDING" ]] && [[ $elapsed -lt $timeout ]]; do
-    #       sleep $interval
-    #       elapsed=$((elapsed + interval))
-    #       qualityGateStatus=$(curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY" | jq -r '.projectStatus.status')
-    #       echo "Current status: $qualityGateStatus"
-    #       if [[ "$qualityGateStatus" != "PENDING" ]]; then
-    #         status=$qualityGateStatus
-    #       fi
-    #     done
-    #     if [[ "$status" != "OK" ]]; then
-    #       echo "Quality gate failed with status: $status"
-    #       exit 1
-    #     fi
+    - name: Wait for SonarQube Quality Gate
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_PROJECT_KEY: ${{ env.SONAR_PROJECT_KEY }}
+      run: |
+        echo "Checking SonarQube Quality Gate status..."
+        status="PENDING"
+        timeout=300
+        interval=10
+        elapsed=0
+        while [[ "$status" == "PENDING" ]] && [[ $elapsed -lt $timeout ]]; do
+          sleep $interval
+          elapsed=$((elapsed + interval))
+          qualityGateStatus=$(curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY" | jq -r '.projectStatus.status')
+          echo "Current status: $qualityGateStatus"
+          if [[ "$qualityGateStatus" != "PENDING" ]]; then
+            status=$qualityGateStatus
+          fi
+        done
+        if [[ "$status" != "OK" ]]; then
+          echo "Quality gate failed with status: $status"
+          exit 1
+        fi
     
     - name: Run Trivy File System Scan
       uses: aquasecurity/trivy-action@master
