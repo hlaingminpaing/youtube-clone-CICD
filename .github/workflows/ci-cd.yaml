@@ -51,7 +51,7 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Wait for SonarQube Quality Gate
-      uses: SonarSource/sonarcloud-quality-gate-action@v1.1.0
+      uses: SonarSource/sonarcloud-quality-gate-action@master
       with:
         timeout: 300
       env:
