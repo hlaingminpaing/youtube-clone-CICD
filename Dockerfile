@@ -8,7 +8,7 @@
 # EXPOSE 3000
 # CMD ["npm", "start"]
 
-Builder Stage
+# Builder Stage
 FROM node:20-slim AS builder
 WORKDIR /app
 # Install dependencies
