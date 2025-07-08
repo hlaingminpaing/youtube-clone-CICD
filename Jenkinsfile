@@ -7,7 +7,7 @@ pipeline {
     
     tools {
         jdk 'jdk21'
-        nodejs 'node16'
+        nodejs 'node20'
     }
     
     environment {
@@ -67,7 +67,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    def nodeHome = tool name: 'node16', type: 'nodejs'
+                    def nodeHome = tool name: 'node20', type: 'nodejs'
                     env.PATH = "${nodeHome}/bin:${env.PATH}"
                     sh "node --version"
                     sh "npm --version"
